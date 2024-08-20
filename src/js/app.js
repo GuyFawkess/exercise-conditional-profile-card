@@ -28,35 +28,65 @@ function render(variables = {}) {
   // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
-  let divName = `<h1>${variables.name} ${variables.lastName}</h1>`;
-  if (variables.name == null && variables.lastName == null)
-    divName = "<h1>Your whole name here</h1>";
-  if (variables.name != null && variables.lastName == null)
-    divName = `<h1>${variables.name} Your last name here</h1>`;
-  if (variables.name == null && variables.lastName != null)
-    divName = `<h1>Missin first name, ${variables.lastName}</h1>`;
-  let socials = `<ul class="${variables.socialMediaPosition}">`;
-  if (variables.socialMediaPosition == "left")
-    socials = `<ul class="position-left"></ul>`;
-  let twit = `${variables.twitter}`;
-  if (variables.twitter == null) twit = `4geeksacademy`;
-  let git = `${variables.github}`;
-  if (variables.github == null) git = `4geeksacademy`;
+
+  // PROFE ESTO ES COMO LO HICE YO, LUEGO ENCONTRE OTRA MANERA DE HACERLO MAS OPTIMA ENTONCES TE DEJO LOS DOS CODIGOS EL MIO EN COMENTARIO
+  // Y EL OTRO LO DEJO ACTIVO YA QUE COMO ME SOBRABA TIEMPO MIRE ALGUNA FORMA MEJOR DE HACERLA PERO LOS DOS FUNCIONAN
+  // nombre y apellido
+  // let divName = `<h1>${variables.name} ${variables.lastName}</h1>`;
+  // if (variables.name == null && variables.lastName == null)
+  //   divName = "<h1>Your whole name here</h1>";
+  // if (variables.name != null && variables.lastName == null)
+  //   divName = `<h1>${variables.name} Your last name here</h1>`;
+  // if (variables.name == null && variables.lastName != null)
+  //   divName = `<h1>Missin first name, ${variables.lastName}</h1>`;
+  // let socials = `<ul class="${variables.socialMediaPosition}">`;
+  // // posicion de los social medias;
+  // if (variables.socialMediaPosition == "left")
+  //   socials = `<ul class="position-left"></ul>`;
+  // // los enlaces de los social medias
+  // let twit = `${variables.twitter}`;
+  // if (variables.twitter == null) twit = `4geeksacademy`;
+  // let git = `${variables.github}`;
+  // if (variables.github == null) git = `4geeksacademy`;
+  // let linked = `${variables.linkedin}`;
+  // if (variables.linkedin == null) linked = `4geeksacademy`;
+  // let insta = `${variables.instagram}`;
+  // if (variables.instagram == null) insta = `4geeksacademy`;
+
+  // Handle name and lastName logic
+  const name = variables.name || "Your";
+  const lastName = variables.lastName || "whole name here";
+  const divName = `<h1>${name} ${lastName}</h1>`;
+
+  // redes sociales
+  const sociales = `
+   <ul class="${variables.socialMediaPosition || "position-left"}">
+      <li><a href="https://twitter.com/${variables.twitter ||
+        "4geeksacademy"}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${variables.github ||
+              "4geeksacademy"}" target="_blank"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/school/${variables.linkedin ||
+              "4geeksacademy"}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/${variables.instagram ||
+              "4geeksacademy"}" target="_blank"><i class="fab fa-instagram"></i></a></li>
+          </ul>
+  `;
+
+  // ocupacion laboral
+  const posicionLaboral =
+    variables.role == null ? `<h2> </h2>` : `<h2>${variables.role}</h2>`;
+  // cidad y pais
+  const ciudad = variables.city == null ? `City` : `${variables.city}`;
+  const pais = variables.country == null ? `Country` : `${variables.country}`;
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
           ${divName}
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          ${socials}
-            <li><a href="https://twitter.com/${twit}" target="_blank"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/${git}" target="_blank"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy" target="_blank"><i class="fab fa-instagram"></i></a></li>
-          </ul>
-        </div>
-    `;
+          ${posicionLaboral}
+          <h3>${ciudad}, ${pais}</h3>
+          ${sociales}
+            `;
 }
 
 /**
