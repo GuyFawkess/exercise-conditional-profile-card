@@ -35,6 +35,13 @@ function render(variables = {}) {
     divName = `<h1>${variables.name} Your last name here</h1>`;
   if (variables.name == null && variables.lastName != null)
     divName = `<h1>Missin first name, ${variables.lastName}</h1>`;
+  let socials = `<ul class="${variables.socialMediaPosition}">`;
+  if (variables.socialMediaPosition == "left")
+    socials = `<ul class="position-left"></ul>`;
+  let twit = `${variables.twitter}`;
+  if (variables.twitter == null) twit = `4geeksacademy`;
+  let git = `${variables.github}`;
+  if (variables.github == null) git = `4geeksacademy`;
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
@@ -42,11 +49,11 @@ function render(variables = {}) {
           ${divName}
           <h2>Web Developer</h2>
           <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          ${socials}
+            <li><a href="https://twitter.com/${twit}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://github.com/${git}" target="_blank"><i class="fab fa-github"></i></a></li>
+            <li><a href="https://linkedin.com/school/4geeksacademy" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https://instagram.com/4geeksacademy" target="_blank"><i class="fab fa-instagram"></i></a></li>
           </ul>
         </div>
     `;
